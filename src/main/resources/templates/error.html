@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="../assets/css/error.css" rel="stylesheet">
+</head>
+<body id="page-top">
+<div class="container">
+        <div class="error">
+            <h1 th:text="${statusCode != null}? ${statusCode}:''"></h1>
+            <h2>Error</h2>
+          <label th:text="${message}"></label>
+        </div>
+        <div class="stack-container">
+            
+            
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 25px; --scaledist: .95; --vertdist: -5px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-container">
+                <div class="perspec" style="--spreaddist: 0px; --scaledist: 1; --vertdist: 0px;">
+                    <div class="card">
+                        <div class="writing">
+                            <div class="topbar">
+                                <div class="red"></div>
+                                <div class="yellow"></div>
+                                <div class="green"></div>
+                            </div>
+                            <div class="code">
+                                <ul>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="../assets/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../assets/js/app/error.js"></script>
+ </body>
+</html>

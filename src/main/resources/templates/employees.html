@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VCO Systems</title>
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<!--     <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.carousel.min.css"> -->
+<!--     <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.theme.default.min.css"> -->
+<!--     <link href="../assets/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet"> -->
+
+<link href="../assets/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/jqwidgets/styles/jqx.base.css"
+	type="text/css" />
+
+<style type="text/css">
+.jqx-grid .jqx-clear {
+	z-index: 0;
+}
+</style>
+</head>
+
+<body>
+
+
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<div th:insert="~{/header::header-frag}"></div>
+
+		<div th:insert="~{/sidebar::sidebar-frag}"></div>
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+
+				<div class="container-fluid" style="padding: 0px">
+					<div class="row d-flex" style="padding: 10px">
+						<button type="button" class="btn btn-primary"
+							id="addEvent"
+							style="margin-left: 0.5rem" >Add Event</button>
+					</div>
+
+					<div class="row d-flex justify-content-center">
+
+						<div class="col-lg-12">
+							<div id="event_grid"></div>
+						</div>
+					</div>
+					<div class="row d-flex justify-content-center">
+
+
+						<div class="modal" id="addUpdateEvents" style="margin-left: 5%"
+							data-backdrop="static" data-keyboard="false">
+
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="card">
+
+										<div class="card-header py-3">
+
+											<h6 id="header" class="m-0 font-weight-bold"
+												style="line-height: revert; flex: auto;color: white;">Add Event</h6>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true" style="color: white;">&times;</span>
+											</button>
+
+
+										</div>
+										<div class="card-body">
+											<form class="user" id="orgEventsForm"
+												enctype="multipart/form-data">
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="eventName" class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">Event Name</span> <input
+															type="text" class="form-control form-control-user"
+															id="eventName" name="eventName">
+													</div>
+													<div class="col-sm-6">
+														<span for="eventDesc" class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">Event Description</span> <input
+															type="text" class="form-control form-control-user"
+															id="eventDesc" name="eventDesc">
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="fromDate" class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">From Date</span>
+														<div class="form-control form-control-user" id='fromDate'></div>
+
+													</div>
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="toDate" class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">To Date</span>
+														<div class="form-control form-control-user" id='toDate'></div>
+
+													</div>
+												</div>
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="inviteLink"
+															class="form-label form-control-user"
+															style="padding-bottom: 1.5rem"> Invite Link</span> <input
+															type="text" class="form-control form-control-user"
+															id="inviteLink" name="inviteLink">
+													</div>
+
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="inviteCard"
+															class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">Upload Invite Card</span>
+														<input type="file" class="form-control form-control-user"
+															style="padding-top: 3px; padding-left: 1px"
+															name="inviteCard" id="inviteCard" accept="image/*">
+													</div>
+												</div>
+												
+												<div id="activeCheckbox" class="form-group row" style="visibility: hidden;">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="active"
+															class="form-label form-control-user"
+															style="padding-bottom: 1.5rem">Active</span> <input
+															type="checkbox"
+															id="active" name="active" value="true" checked="checked">
+												</div>
+ 
+												</div>
+												
+												<input type="text" name="imageName" id="imageName"
+													style="visibility: hidden; padding: 0px; height: 0px;"
+													readonly>
+													<input type="number" value=0 name="id" id="id"
+													style="visibility: hidden; padding: 0px; height: 0px;"
+													readonly>
+											    <input type="button"
+													class="btn btn-primary btn-user btn-block"
+													style="margin: auto; width: 15%" value="Add Event"
+													id="addUpdEvent" data-dismiss="modal"/>
+												<hr>
+
+											</form>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+
+		</div>
+
+
+		<!-- Required vendors -->
+		<script src="../assets/vendor/global/global.min.js"></script>
+		<script src="../assets/js/quixnav-init.js"></script>
+		<script src="../assets/js/custom.min.js"></script>
+
+		<script type="text/javascript"
+			src="../assets/vendor/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxcore.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxbuttons.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxscrollbar.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxmenu.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxcheckbox.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxdropdownlist.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/jqxgrid.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxgrid.sort.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxgrid.pager.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxgrid.selection.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxgrid.edit.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxgrid.filter.js"></script>
+			<script type="text/javascript" src="../assets/jqwidgets/jqxgrid.columnsresize.js"></script>
+		<script type="text/javascript" src="../assets/jqwidgets/demos.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxdatetimeinput.js"></script>
+		<script type="text/javascript"
+			src="../assets/jqwidgets/jqxcalendar.js"></script>
+		<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+		<script type="text/javascript"
+			src="../assets/js/app/organizational_events.js"></script>
+</body>
+
+</html>

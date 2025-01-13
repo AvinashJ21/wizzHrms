@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+
+</head>
+
+<body>
+
+	<!--**********************************
+            Sidebar start
+        ***********************************-->
+	<div class="quixnav" th:fragment="sidebar-frag">
+		<div
+			th:attr="class=${admin_settings_menu_active}?'quixnav-scroll ps mm-active':'quixnav-scroll'">
+			<ul
+				th:attr="class=${admin_settings_ul_active}?'metismenu mm-show':'metismenu'"
+				id="menu">
+				<li th:attr="class=${admin_settings_li_active}?'mm-active':''"><a
+					class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+						class="icon icon-single-04"></i><span class="nav-text">Admin
+							Settings</span></a>
+					<ul aria-expanded="false"
+						th:attr="class=${admin_settings_ul_active}?'mm-collapse mm-show':'mm-collapse'">
+						<li th:attr="class=${admin_settings_orgDetails}?'mm-active':''"><a
+							th:attr="class=${admin_settings_orgDetails}?'mm-active':''"
+							th:href="@{/admin/organizationdetails}">Organization Details</a></li>
+						<li><a th:href="@{/admin/organizationalEvents}">Organization
+								Events</a></li>
+						<li><a th:href="@{/admin/rolesAndOther}">Roles & Other</a></li>
+						<li><a th:href="@{/admin/organizationEmployees}">Employees</a></li>
+
+					</ul></li>
+			</ul>
+		</div>
+
+
+	</div>
+	<!--**********************************
+            Sidebar end
+        ***********************************-->
+</body>
+
+</html>

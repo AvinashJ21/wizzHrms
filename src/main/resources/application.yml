@@ -1,0 +1,22 @@
+server:
+  port: 7788
+spring:
+  application:
+    name: wizzHRMS
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost:5432/hrms
+    platform: postgres
+    initialization-mode: always
+    continue-on-error: true
+  jpa:
+    properties: 
+      hibernate:
+        ddl-auto: update
+        default_schema: hrmsSchema
+    database: postgresql
+    show-sql: true
+    generate-ddl: true
+    

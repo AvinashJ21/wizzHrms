@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VCO Systems</title>
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="../assets/images/favicon.png">
+<!--     <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.carousel.min.css"> -->
+<!--     <link rel="stylesheet" href="../assets/vendor/owl-carousel/css/owl.theme.default.min.css"> -->
+<!--     <link href="../assets/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet"> -->
+<link href="../assets/css/style.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<div th:insert="~{/header::header-frag}"></div>
+
+		<div th:insert="~{/sidebar::sidebar-frag}"></div>
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+
+				<div class="row d-flex justify-content-center">
+
+					<div class="col-lg-8">
+
+						<!-- Basic Card Example -->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold" style="color: white;">Organization
+									Details</h6>
+							</div>
+							<div class="card-body">
+
+								<form class="user" action="/admin/addOrganizationalDetails"
+									method="POST" enctype="multipart/form-data">
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<span for="name" class="form-label form-control-user"
+												style="padding-bottom: 1.5rem"> Name</span> <input
+												type="text" class="form-control form-control-user" id="name"
+												name="name"
+												th:value="${orgDetails != null}? ${orgDetails.name}:''">
+										</div>
+										<div class="col-sm-6">
+											<span for="orgDesc" class="form-label form-control-user"
+												style="padding-bottom: 1.5rem"> Description</span> <input
+												type="text" class="form-control form-control-user"
+												id="orgDesc" name="orgDesc"
+												th:value="${orgDetails != null}? ${orgDetails.orgDesc}:''">
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<span for="websiteURL" class="form-label form-control-user"
+												style="padding-bottom: 1.5rem"> Website URL</span> <input
+												type="text" class="form-control form-control-user"
+												id="websiteURL" name="websiteURL"
+												th:value="${orgDetails != null}?${orgDetails.websiteURL}:''">
+										</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<span for="copyRights" class="form-label form-control-user"
+												style="padding-bottom: 1.5rem"> Copy Rights Year</span> <input
+												type="text" class="form-control form-control-user"
+												id="copyRights" name="copyRights"
+												th:value="${orgDetails != null}?${orgDetails.copyRights}:''">
+										</div>
+									</div>
+									<div class="form-group">
+										<span for="contactEmail" class="form-label form-control-user"
+											style="padding-bottom: 1.5rem"> Email</span> <input
+											type="email" class="form-control form-control-user"
+											id="contactEmail" name="contactEmail"
+											th:value="${orgDetails != null}?${orgDetails.contactEmail}:''">
+									</div>
+									<div class="mb-3">
+										<span for="imgFile" class="form-label form-control-user"
+											style="padding-bottom: 1.5rem">Upload Organization
+											logo</span> <input type="file"
+											class="form-control form-control-user"
+											style="padding-top: 10px; height: 50px" name="logo" id="logo"
+											accept="image/*">
+									</div>
+									<input type="text" name="imgFileName" id="imgFileName"
+										th:value="${orgDetails != null}?${orgDetails.imgFileName}:''"
+										style="visibility: hidden; padding: 0px; height: 0px">
+									<input type="submit" class="btn btn-primary btn-user btn-block"
+										style="margin: auto; width: 25%"
+										th:attr="value=${orgDtlsAvailable}?'Edit Details':'Add Details'" />
+									<hr>
+
+								</form>
+
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+
+
+
+		</div>
+		<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+		<!--**********************************
+        Scripts
+    ***********************************-->
+		<!-- Required vendors -->
+		<script src="../assets/vendor/global/global.min.js"></script>
+		<script src="../assets/js/quixnav-init.js"></script>
+		<script src="../assets/js/custom.min.js"></script>
+</body>
+
+</html>
