@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-	
+
 <div th:fragment="roles-frag" style="padding: 10px; margin-left: 0.5rem">
 
 	<div class="row">
@@ -32,7 +32,7 @@
 
 						<div class="card-header py-3">
 
-							<h6 id="header" class="m-0 font-weight-bold"
+							<h6 id="roleHeader" class="m-0 font-weight-bold"
 								style="line-height: revert; flex: auto; color: white;">Add
 								Role</h6>
 							<button type="button" class="close" data-dismiss="modal"
@@ -60,19 +60,22 @@
 											name="roleDesc">
 									</div>
 								</div>
-								<div id="rolesActiveChkBox" class="form-group row rowMargin" style="visibility: hidden;">
-									<div class="col-sm-12">
-										<span for="roleDesc" class="form-label form-control-user">
-											Role Description</span> <input type="text"
-											class="form-control form-control-user" id="roleDesc"
-											name="roleDesc" value="true" checked="checked">
+								<div id="rolesActiveChkBox" class="form-group row"
+									style="display: none;">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<span for="roleActive" class="form-label form-control-user"
+											style="padding-bottom: 1.5rem">Active</span> <input
+											type="checkbox" id="roleActive" name="roleActive"
+											value="true" checked="checked">
 									</div>
 								</div>
-								 <input type="number"
-											class="form-control form-control-user" id="id"
-											name="id" style="visibility: hidden;width: 0px;height: 0px">
-								<input type="button" class="btn btn-primary btn-user btn-block rowMargin"
-									style="margin: auto; width: 20%" value="Add Role"
+
+								<input type="number" class="form-control form-control-user"
+									id="id" name="id"
+									style="visibility: hidden; width: 0px; height: 0px"> <input
+									type="button"
+									class="btn btn-primary btn-user btn-block rowMargin"
+									style="margin: auto; width: 24%" value="Add Role"
 									id="addUpdRole" />
 								<hr>
 

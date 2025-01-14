@@ -14,7 +14,8 @@ $(document).ready(function() {
 				{ name: 'roleDesc', type: 'string' },
 				{ name: 'createdOn', type: 'date' },
 				{ name: 'modifiedDate', type: 'date' },
-				{ name: 'modifiedBy', type: 'string' }
+				{ name: 'modifiedBy', type: 'string' },
+				{ name: 'active', type: 'boolean' }
 			]
 		};
 		var dataAdapter = new $.jqx.dataAdapter(source);
@@ -39,7 +40,18 @@ $(document).ready(function() {
 					{ text: 'Role Description', datafield: 'roleDesc', width: '20%' },
 					{ text: 'Created Date', datafield: 'createdOn', width: '20%' },
 					{ text: 'Modified Date', datafield: 'modifiedDate', width: '20%' },
-					{ text: 'Modified By', datafield: 'modifiedBy' }
+					{ text: 'Modified By', datafield: 'modifiedBy' },
+					{
+						text: 'Active', datafield: 'active', width: '5%', cellsrenderer: function(row, dataField, value, html, column, data) {
+
+							if (value)
+								return '<div style="align-items: center;justify-content: center; height: 100%; display: flex;"><img style="width: 35px; height: 20px;" src="../assets//images/active.png"/></div>';
+							else
+								return '<div style="align-items: center;justify-content: center; height: 100%; display: flex;"><img style="width: 20px; height: 20px;" src="../assets//images/inactive.png"/></div>';
+						}
+
+					}
+					
 
 				]
 			});
@@ -48,6 +60,9 @@ $(document).ready(function() {
 
 		$("#rolesModal").modal('show');
 		$("#rolesForm").trigger('reset');
+		$("#addUpdRole").val('Add Role');
+		$("#roleHeader").html('Add Role');
+		$("#rolesActiveChkBox").css('display', 'none');
 
 	});
 
@@ -57,6 +72,7 @@ $(document).ready(function() {
 		param['roleName'] = $("#roleName").val();
 		param['roleDesc'] = $("#roleDesc").val();
 		param['id'] = $("#id").val();
+		param['active'] = $('#roleActive').is(":checked");
 		var arr = ['roleName', 'roleDesc'];
 		if (validateFields(arr)) {
 
@@ -118,6 +134,14 @@ $(document).ready(function() {
 		$("#roleName").val(dataRow.roleName);
 		$("#roleDesc").val(dataRow.roleDesc);
 		$("#id").val(dataRow.id);
+		$("#addUpdRole").val('Update Role');
+		$("#roleHeader").html('Update Role');
+		if (dataRow.active) {
+			$("#roleActive").prop('checked', true);
+		} else {
+			$("#roleActive").prop('checked', false);
+		}
+		$("#rolesActiveChkBox").css('display', 'block');
 	});
 
 

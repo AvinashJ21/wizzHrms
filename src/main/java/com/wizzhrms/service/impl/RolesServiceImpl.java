@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.wizzhrms.dto.RolesDto;
@@ -28,7 +30,7 @@ public class RolesServiceImpl implements RolesService {
 	@Override
 	public List<RolesDto> getRoles() {
 		
-			List<Roles> rolesAll = rolesRepo.findAll();
+			List<Roles> rolesAll = rolesRepo.findAll(Sort.by(Direction.DESC, "modifiedDate"));
 			List<RolesDto> rolesDtoAll = new ArrayList<>();
 			rolesAll.stream().forEach(role->{
 				

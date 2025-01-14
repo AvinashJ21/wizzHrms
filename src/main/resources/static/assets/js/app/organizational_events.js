@@ -96,6 +96,8 @@ $(document).ready(function() {
 		$("#addUpdateEvents").modal('show');
 		$("#orgEventsForm").trigger('reset');
 		$("#activeCheckbox").css('visibility', 'hidden');
+		$("#addUpdEvent").val('Add Event');
+		$("#header").html('Add Event');
 
 	});
 

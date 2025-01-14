@@ -17,5 +17,6 @@ public class OrganizationalEventsDto {
 	private String imageName;
 	private Date createdOn;
 	private Date modifiedDate;
+	private String modifiedBy;
 
 }

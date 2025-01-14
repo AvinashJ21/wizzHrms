@@ -37,4 +37,5 @@ public class OrganizationalEvents {
 		@LastModifiedDate
 		@Column(insertable = true, updatable = true)
 		private Date modifiedDate;
+		private String modifiedBy;
 }
