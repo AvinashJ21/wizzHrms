@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wizzhrms.dto.CommonResponseDto;
+import com.wizzhrms.dto.EmployeeDto;
 import com.wizzhrms.dto.OrganizationalDetailsDto;
 import com.wizzhrms.dto.OrganizationalEventsDto;
 import com.wizzhrms.dto.ProjectsDto;
@@ -106,6 +107,13 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("employees.html");
 		return mv;
 
+	}
+	
+	@PostMapping("/addUpdEmployee")
+	public void addUpdEmployee(@ModelAttribute EmployeeDto empDto) {
+		
+		
+		
 	}
 
 	@GetMapping("/rolesAndOther")

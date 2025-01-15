@@ -48,7 +48,7 @@ $(document).ready(function() {
 					{ text: 'Invitation Card', datafield: 'imageName', width: '15%' },
 					{ text: 'Created On', datafield: 'createdOn', width: '15%' },
 					{
-						text: 'Active', datafield: 'active', width: '5%', cellsrenderer: function(row, dataField, value, html, column, data) {
+						text: 'Active', pinned: true, datafield: 'active', width: '5%', cellsrenderer: function(row, dataField, value, html, column, data) {
 
 							if (value)
 								return '<div style="align-items: center;justify-content: center; height: 100%; display: flex;"><img style="width: 35px; height: 20px;" src="../assets//images/active.png"/></div>';
