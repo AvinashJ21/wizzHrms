@@ -28,7 +28,7 @@ public class Projects {
 	private String projectCode;
 	private int managerId;
 	private String projectType;
-	private String productOwner;
+	private String projectOwner;
 	private String startDate;
 	private String endDate;
 	@CreatedDate

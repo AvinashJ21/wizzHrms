@@ -19,12 +19,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.wizzhrms.dto.CommonResponseDto;
 import com.wizzhrms.dto.OrganizationalDetailsDto;
 import com.wizzhrms.dto.OrganizationalEventsDto;
+import com.wizzhrms.dto.ProjectsDto;
 import com.wizzhrms.dto.RolesDto;
 import com.wizzhrms.entity.OrganizationDetails;
 import com.wizzhrms.entity.OrganizationalEvents;
+import com.wizzhrms.entity.Projects;
 import com.wizzhrms.entity.Roles;
 import com.wizzhrms.service.OrganizationDetailsService;
 import com.wizzhrms.service.OrganizationEventService;
+import com.wizzhrms.service.ProjectService;
 import com.wizzhrms.service.RolesService;
 import com.wizzhrms.service.constants.Constants;
 
@@ -43,6 +46,9 @@ public class AdminController {
 
 	@Autowired
 	RolesService rolesService;
+	
+	@Autowired
+	ProjectService projectService;
 
 	@GetMapping("/organizationdetails")
 	public ModelAndView getOrganizationDetails() {
@@ -121,6 +127,20 @@ public class AdminController {
 	public ResponseEntity<List<RolesDto>> addUpdRole() {
 
 		return ResponseEntity.status(HttpStatus.OK).body(rolesService.getRoles());
+
+	}
+	
+	@PostMapping("/addUpdProject")
+	public ResponseEntity<Projects> addUpdProject(@RequestBody ProjectsDto projectDto) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.addUpdProject(projectDto));
+
+	}
+	
+	@GetMapping("/getProjects")
+	public ResponseEntity<List<ProjectsDto>> getProjects() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.getProjects());
 
 	}
 

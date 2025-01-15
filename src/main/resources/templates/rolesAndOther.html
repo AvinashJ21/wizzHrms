@@ -21,17 +21,14 @@
 .jqx-grid .jqx-clear {
 	z-index: 0;
 }
- .row{
- 
- 	margin: 0px !important;
- }
- 
- .rowMargin{
- 
- 	margin-bottom: 15px !important;
- 
- }
 
+.row {
+	margin: 0px !important;
+}
+
+.rowMargin {
+	margin-bottom: 15px !important;
+}
 </style>
 </head>
 
@@ -65,7 +62,7 @@
 					<div th:insert="~{/roles::roles-frag}"></div>
 				</div>
 				<div id="projectsTab">
-					<div></div>
+					<div th:insert="~{/projects::projects-frag}"></div>
 				</div>
 
 			</div>
@@ -109,10 +106,21 @@
 		src="../assets/jqwidgets/jqxgrid.filter.js"></script>
 	<script type="text/javascript"
 		src="../assets/jqwidgets/jqxgrid.columnsresize.js"></script>
+
+
+	<script type="text/javascript" src="../assets/jqwidgets/jqxsplitter.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
+
+	<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcombobox.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxdatetimeinput.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcalendar.js"></script>
 	<script type="text/javascript" src="../assets/jqwidgets/demos.js"></script>
 
 	<script type="text/javascript" src="../assets/js/app/rolesAndOther.js"></script>
 	<script type="text/javascript" src="../assets/js/app/roles.js"></script>
+	<script type="text/javascript" src="../assets/js/app/projects.js"></script>
 	<script type="text/javascript" src="../assets/js/app/common.js"></script>
 
 
