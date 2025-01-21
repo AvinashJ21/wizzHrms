@@ -47,8 +47,21 @@
 
 				<div class="container-fluid" style="padding: 0px">
 					<div class="row d-flex" style="padding: 10px">
-						<button type="button" class="btn btn-primary" id="addEmployee"
-							style="margin-left: 0.5rem">Add Employee</button>
+
+						<div class="col-sm-2 mb-2 mb-sm-0">
+
+							<button type="button" class="btn btn-primary" id="addEmployee"
+								style="margin-left: 0.5rem">Add Employee</button>
+						</div>
+						<div class="col-sm-2 mb-2 mb-sm-0" style="padding: 0px">
+							<input type="text" class="form-control form-control-user"
+								id="filterEmpId" name="filterEmpId" placeholder="Employee Id">
+						</div>
+						<div class="col-sm-1 mb-1 mb-sm-0" style="padding: 0px">
+							<button type="button" class="btn btn-primary" id="findEmp"
+								style="margin-left: 0.5rem">Find</button>
+						</div>
+
 					</div>
 
 					<div class="row d-flex justify-content-center">
@@ -65,7 +78,8 @@
 							data-keyboard="false">
 
 							<div class="modal-dialog modal-lg">
-								<div class="modal-content" style="height: 600px;overflow-y:scroll">
+								<div class="modal-content"
+									style="height: 600px; overflow-y: scroll">
 									<div class="card">
 
 										<div class="card-header py-3">
@@ -81,28 +95,51 @@
 
 										</div>
 										<div class="card-body">
-											<form class="user" action="#" id="employeesForm">
+											<form class="user" id="employeesForm"
+												enctype="multipart/form-data">
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="employeeId"
 															class="form-label form-control-user">Employee Id</span> <input
 															type="text" class="form-control form-control-user"
-															id="employeeId" name="employeeId">
+															id="employeeOrgId" name="employeeOrgId"
+															pattern="[a-zA-Z0-9]{6,}"
+															title="Minimum 6 characters are required" required>
 													</div>
 													<div class="col-sm-6">
 														<span for="EmployeeDesc"
 															class="form-label form-control-user">Employee Full
 															Name</span> <input type="text"
 															class="form-control form-control-user"
-															id="employeeFullName" name="employeeFullName">
+															id="employeeFullName" name="employeeFullName" required
+															pattern="[a-zA-Z]{5,}"
+															title="Minimum 5 characters are required">
 													</div>
 												</div>
+
+												<div class="form-group row">
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="designation"
+															class="form-label form-control-user">Designation </span>
+														<div id="designation"></div>
+													</div>
+
+													<div class="col-sm-6 mb-3 mb-sm-0">
+														<span for="designation"
+															class="form-label form-control-user">Application
+															Roles </span>
+														<div id="roles"></div>
+													</div>
+
+
+												</div>
+
 												<div class="form-group row">
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="emailId" class="form-label form-control-user">Email
 															Id</span> <input type="email"
 															class="form-control form-control-user" id="emailId"
-															name="emailId">
+															name="emailId" required>
 
 													</div>
 													<div class="col-sm-6 mb-3 mb-sm-0">
@@ -118,15 +155,15 @@
 															class="form-label form-control-user">Phone Number</span>
 														<input type="text" class="form-control form-control-user"
 															pattern="[1-9]{1}[0-9]{9}"
-															title="Enter 10 digit mobile number" id="phoneNumber"
-															name="phoneNumber" required>
+															title="Enter 10 digit mobile number" id="mobNumber"
+															name="mobNumber" required>
 													</div>
-
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="hireDate" class="form-label form-control-user">Hire
 															Date</span>
 														<div class="form-control form-control-user" id='hireDate'></div>
 													</div>
+
 
 												</div>
 
@@ -146,8 +183,8 @@
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="personalEmailId"
 															class="form-label form-control-user">Email Id</span> <input
-															type="text" class="form-control form-control-user"
-															id="personalEmailId" name="personalEmailId">
+															type="email" class="form-control form-control-user"
+															id="personalEmailId" name="personalEmailId" required>
 													</div>
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="dobDate" class="form-label form-control-user">Date
@@ -163,7 +200,7 @@
 														<span for="emailId" class="form-label form-control-user">Adhar
 															Card No.</span> <input type="text"
 															class="form-control form-control-user" id="adharCardNo"
-															name="adharCardNo">
+															name="adharCardNo" required>
 
 													</div>
 
@@ -171,7 +208,7 @@
 														<span for="emailId" class="form-label form-control-user">PAN
 															Card No.</span> <input type="text"
 															class="form-control form-control-user" id="panCardNo"
-															name="panCardNo">
+															name="panCardNo" required>
 													</div>
 
 
@@ -187,16 +224,18 @@
 															Address</span>
 														<textarea class="form-control form-control-user"
 															id="permanentAddress" name="permanentAddress" rows="2"
-															cols="50"></textarea>
+															cols="50" required></textarea>
 
 													</div>
 
 													<div class="col-sm-6 mb-3 mb-sm-0">
 														<span for="altMobNumber"
 															class="form-label form-control-user">Alternate
-															Mobile Number </span>
-														<div class="form-control form-control-user"
-															id='altMobNumber'></div>
+															Mobile Number </span> <input type="text"
+															class="form-control form-control-user"
+															pattern="[1-9]{1}[0-9]{9}"
+															title="Enter 10 digit mobile number" id="altMobNumber"
+															name="altMobNumber" required>
 													</div>
 												</div>
 												<div id="empactiveCheckbox" class="form-group row"
@@ -210,14 +249,17 @@
 
 												</div>
 
-												<input type="number" value=0 name="id" id="id"
-													style="visibility: hidden; padding: 0px; height: 0px;"
-													readonly>
-													
-												<input type="submit"
+												<input type="number" value=0 name="employeeId"
+													id="employeeId"
+													style="display: none; padding: 0px; height: 0px;" readonly>
+												<input type="number" value=0 name="empPersonalId"
+													id="empPersonalId"
+													style="display: none; padding: 0px; height: 0px;" readonly>
+
+												<input type="button"
 													class="btn btn-primary btn-user btn-block"
 													style="margin: auto; width: 15%" value="Add Employee"
-													id="addUpdEmployee" data-dismiss="modal" />
+													id="addUpdEmployee" />
 												<hr>
 
 											</form>
@@ -234,59 +276,55 @@
 
 
 			</div>
-
-
-
 		</div>
 
 
-		<!-- Required vendors -->
-		<script src="../assets/vendor/global/global.min.js"></script>
-		<script src="../assets/js/quixnav-init.js"></script>
-		<script src="../assets/js/custom.min.js"></script>
-
-		<script type="text/javascript"
-			src="../assets/vendor/jquery/jquery.min.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxcore.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxbuttons.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxscrollbar.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxmenu.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxcheckbox.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxdropdownlist.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxgrid.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.sort.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.pager.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.selection.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.edit.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.filter.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxgrid.columnsresize.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/demos.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxsplitter.js"></script>
-		<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
-
-		<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxcombobox.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxdatetimeinput.js"></script>
-		<script type="text/javascript"
-			src="../assets/jqwidgets/jqxcalendar.js"></script>
-		<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</div>
 
 
-		<script type="text/javascript" src="../assets/js/app/employees.js"></script>
+	<!-- Required vendors -->
+	<script src="../assets/vendor/global/global.min.js"></script>
+	<script src="../assets/js/quixnav-init.js"></script>
+	<script src="../assets/js/custom.min.js"></script>
+
+	<script type="text/javascript"
+		src="../assets/vendor/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcore.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxbuttons.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxscrollbar.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxmenu.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcheckbox.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxdropdownlist.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxgrid.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.sort.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.pager.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.selection.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.edit.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.filter.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxgrid.columnsresize.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/demos.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxsplitter.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxlistbox.js"></script>
+
+	<script type="text/javascript" src="../assets/jqwidgets/jqxdata.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcombobox.js"></script>
+	<script type="text/javascript"
+		src="../assets/jqwidgets/jqxdatetimeinput.js"></script>
+	<script type="text/javascript" src="../assets/jqwidgets/jqxcalendar.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<script type="text/javascript" src="../assets/js/app/common.js"></script>
+	<script type="text/javascript" src="../assets/js/app/employees.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 package com.wizzhrms.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.wizzhrms.service.constants.Constants;
@@ -12,8 +13,12 @@ import lombok.Data;
 @Entity
 @Table(name = "OrganizationDetails")
 @Data
-public class OrganizationDetails {
+public class OrganizationDetails implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8354370750050464541L;
 	@Id
 	private int id = Constants.ORG_DETAILS_ID;
 	private String name;

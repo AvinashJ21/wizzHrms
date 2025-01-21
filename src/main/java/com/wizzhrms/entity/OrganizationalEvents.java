@@ -1,5 +1,6 @@
 package com.wizzhrms.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -19,8 +20,12 @@ import lombok.Data;
 @Table(name = "OrganizationalEvents")
 @EntityListeners(AuditingEntityListener.class)
 @Data
-public class OrganizationalEvents {
+public class OrganizationalEvents implements Serializable {
 	
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9059096602271816066L;
 		@Id
 		@GeneratedValue(strategy = GenerationType.SEQUENCE)
 		private int id;

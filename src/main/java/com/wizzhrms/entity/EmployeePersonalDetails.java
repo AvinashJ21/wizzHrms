@@ -2,8 +2,6 @@ package com.wizzhrms.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,51 +18,42 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Employee")
+@Table(name = "EmpPersonalDetails")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class Employee implements Serializable {
+public class EmployeePersonalDetails implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4530328868737216930L;
+	private static final long serialVersionUID = 4139866371511780291L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int employeeId;
-	private String employeeOrgId;
-	private String employeeFullName;
-	private String designation;
-	private int designationId;
-	private String emailId;
-	private String countryCode;
-	private String mobNumber;
-	private String hireDate;
+	private int empPersonalId;
+	private String personalEmailId;
+	private String birthDate;
+	private String adharNo;
+	private String panNo;
+	private String permanentAddress;
+	private String altMobNumber;
 	@CreatedDate
 	@Column(updatable = false)
 	private Date createdOn;
 	@LastModifiedDate
 	@Column(insertable = true, updatable = true)
-	private Date modifiedDate;
-	private String modifiedBy;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+	private Date createdDate;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn( name="employeeIdFk", referencedColumnName  = "employeeId")
 	@JsonIgnore
-	private EmployeePersonalDetails empPersonalDetails;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinTable(name = "employee_roles", joinColumns = {
-			@JoinColumn(name = "employeeId", referencedColumnName = "employeeId") }, inverseJoinColumns = {
-					@JoinColumn(name = "rolesId", referencedColumnName = "id") })
-	@JsonIgnore
-	private Set<Roles> roles = new HashSet<>();
-	private boolean active;
+	private Employee employee;
+
 
 }

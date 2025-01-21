@@ -1,17 +1,15 @@
 $(document).ready(function() {
 
-
-	getRoles();
-
-	function initializeRolesGrid(data) {
+	getDesignations();
+	function initializeDesignationGrid(data) {
 		var source =
 		{
 			localdata: data,
 			datatype: "array",
 			datafields: [
 				{ name: 'id', type: 'int' },
-				{ name: 'roleName', type: 'string' },
-				{ name: 'roleDesc', type: 'string' },
+				{ name: 'designationName', type: 'string' },
+				{ name: 'designationDesc', type: 'string' },
 				{ name: 'createdOn', type: 'date' },
 				{ name: 'modifiedDate', type: 'date' },
 				{ name: 'modifiedBy', type: 'string' },
@@ -23,7 +21,7 @@ $(document).ready(function() {
 
 
 		// initialize jqxGrid
-		$("#roles_grid").jqxGrid(
+		$("#designation_grid").jqxGrid(
 			{
 				width: '100%',
 				height: '400px',
@@ -36,8 +34,8 @@ $(document).ready(function() {
 				enabletooltips: true,
 				enablehover: true,
 				columns: [
-					{ text: 'Role Name', datafield: 'roleName', width: '20%' },
-					{ text: 'Role Description', datafield: 'roleDesc', width: '20%' },
+					{ text: 'Role Name', datafield: 'designationName', width: '20%' },
+					{ text: 'Role Description', datafield: 'designationDesc', width: '20%' },
 					{ text: 'Created Date', datafield: 'createdOn', width: '20%' },
 					{ text: 'Modified Date', datafield: 'modifiedDate', width: '20%' },
 					{ text: 'Modified By', datafield: 'modifiedBy' },
@@ -56,94 +54,89 @@ $(document).ready(function() {
 				]
 			});
 	}
-	$("#addRole").click(function() {
+	
+	$("#addDesignation").click(function() {
 
-		$("#rolesModal").modal('show');
-		$("#rolesForm").trigger('reset');
-		$("#addUpdRole").val('Add Role');
-		$("#roleHeader").html('Add Role');
-		$("#rolesActiveChkBox").css('display', 'none');
+		$("#designationModal").modal('show');
+		$("#designationForm").trigger('reset');
+		$("#addUpdDesignation").val('Add Designation');
+		$("#designationHeader").html('Add Designation');
+		$("#designationActiveChkBox").css('display', 'none');
 
 	});
-
-	$("#addUpdRole").click(function() {
+	
+	
+	$("#addUpdDesignation").click(function() {
 
 		var param = {};
-		param['roleName'] = $("#roleName").val();
-		param['roleDesc'] = $("#roleDesc").val();
-		param['id'] = $("#id").val();
-		param['active'] = $('#roleActive').is(":checked");
-		var arr = ['roleName', 'roleDesc'];
+		param['designationName'] = $("#designationName").val();
+		param['designationDesc'] = $("#designationDesc").val();
+		param['id'] = $("#desgid").val();
+		param['active'] = $('#designationActive').is(":checked");
+		var arr = ['designationName', 'designationDesc'];
 		if (validateFields(arr)) {
-
-			saveUpdRole(param);
+			saveUpdDesignation(param);
 		} else {
 
 			alert("Please enter all the fields");
 		}
 
-
 	});
-
-	function saveUpdRole(param) {
-
+	
+	function saveUpdDesignation(param){
+		
 		console.log(param);
 		$.ajax({
-			url: "/admin/addUpdRole", type: 'POST', dataType: 'json',
+			url: "/admin/addUpdDesignation", type: 'POST', dataType: 'json',
 			contentType: "application/json",
 			data: JSON.stringify(param),
 			error: function(xhr, status, error) {
 				console.log(error);
-				$('#rolesModal').modal('hide');
+				$('#designationModal').modal('hide');
 			},
 			success: function(data) {
-				$('#rolesModal').modal('hide');
-				getRoles();
+				$('#designationModal').modal('hide');
+				getDesignations();
 
 			}
 		});
-
-
 	}
-
-	function getRoles() {
-
-
+	
+	function getDesignations(){
+		
 		$.ajax({
-			url: "/admin/getRoles", type: 'GET', dataType: 'json',
+			url: "/admin/getDesignations", type: 'POST', dataType: 'json',
 			contentType: "application/json",
+			data: JSON.stringify(),
 			error: function(xhr, status, error) {
 				console.log(error);
-				$('#rolesModal').modal('hide');
+				 
 			},
 			success: function(data) {
-				$('#rolesModal').modal('hide');
-				initializeRolesGrid(data);
+				 
+			 	initializeDesignationGrid(data);
 
 			}
 		});
-
-
 	}
-	$('#roles_grid').on('rowdoubleclick', function(event) {
+	
+	$('#designation_grid').on('rowdoubleclick', function(event) {
 		
 		var rowIndex = event.args.rowindex;
-		var dataRow = $('#roles_grid').jqxGrid('getrowdata', rowIndex);
+		var dataRow = $('#designation_grid').jqxGrid('getrowdata', rowIndex);
 		console.log(dataRow);
-		$('#rolesModal').modal('show');
-		$("#roleName").val(dataRow.roleName);
-		$("#roleDesc").val(dataRow.roleDesc);
-		$("#id").val(dataRow.id);
-		$("#addUpdRole").val('Update Role');
-		$("#roleHeader").html('Update Role');
+		$('#designationModal').modal('show');
+		$("#designationName").val(dataRow.designationName);
+		$("#designationDesc").val(dataRow.designationDesc);
+		$("#desgid").val(dataRow.id);
+		$("#addUpdDesignation").val('Update Deignation');
+		$("#roleHeader").html('Update Deignation');
 		if (dataRow.active) {
-			$("#roleActive").prop('checked', true);
+			$("#designationActive").prop('checked', true);
 		} else {
-			$("#roleActive").prop('checked', false);
+			$("#designationActive").prop('checked', false);
 		}
-		$("#rolesActiveChkBox").css('display', 'block');
+		$("#designationActiveChkBox").css('display', 'block');
 	});
 
-
-
-});
+});	

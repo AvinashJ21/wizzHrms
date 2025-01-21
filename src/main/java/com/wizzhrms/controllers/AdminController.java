@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,15 +18,20 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.wizzhrms.dto.CommonResponseDto;
+import com.wizzhrms.dto.DesignationDto;
 import com.wizzhrms.dto.EmployeeDto;
 import com.wizzhrms.dto.OrganizationalDetailsDto;
 import com.wizzhrms.dto.OrganizationalEventsDto;
 import com.wizzhrms.dto.ProjectsDto;
 import com.wizzhrms.dto.RolesDto;
+import com.wizzhrms.entity.Designation;
+import com.wizzhrms.entity.Employee;
 import com.wizzhrms.entity.OrganizationDetails;
 import com.wizzhrms.entity.OrganizationalEvents;
 import com.wizzhrms.entity.Projects;
 import com.wizzhrms.entity.Roles;
+import com.wizzhrms.service.DesignationService;
+import com.wizzhrms.service.EmployeeService;
 import com.wizzhrms.service.OrganizationDetailsService;
 import com.wizzhrms.service.OrganizationEventService;
 import com.wizzhrms.service.ProjectService;
@@ -47,9 +53,15 @@ public class AdminController {
 
 	@Autowired
 	RolesService rolesService;
-	
+
 	@Autowired
 	ProjectService projectService;
+
+	@Autowired
+	EmployeeService empService;
+
+	@Autowired
+	DesignationService designationService;
 
 	@GetMapping("/organizationdetails")
 	public ModelAndView getOrganizationDetails() {
@@ -108,12 +120,26 @@ public class AdminController {
 		return mv;
 
 	}
-	
+
 	@PostMapping("/addUpdEmployee")
-	public void addUpdEmployee(@ModelAttribute EmployeeDto empDto) {
-		
-		
-		
+	public ResponseEntity<Employee> addUpdEmployee(@RequestBody EmployeeDto empDto) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(empService.addUpdEmployee(empDto));
+
+	}
+
+	@GetMapping("/getEmployees")
+	public ResponseEntity<List<EmployeeDto>> getEmployees() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(empService.getAllEmployees());
+
+	}
+	
+	@GetMapping("/getEmployee/{employeeId}")
+	public ResponseEntity<List<EmployeeDto>> getEmployees(@PathVariable String employeeId) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(empService.getEmployeesByOrgId(employeeId));
+
 	}
 
 	@GetMapping("/rolesAndOther")
@@ -130,21 +156,35 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(rolesService.addUpdRoles(rolesDto));
 
 	}
-	
+
+	@PostMapping("/addUpdDesignation")
+	public ResponseEntity<Designation> addUpdDesignation(@RequestBody DesignationDto desgDto) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(designationService.addUpdDesignation(desgDto));
+
+	}
+
+	@PostMapping("/getDesignations")
+	public ResponseEntity<List<DesignationDto>> getDesignations() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(designationService.getDesignations());
+
+	}
+
 	@GetMapping("/getRoles")
 	public ResponseEntity<List<RolesDto>> addUpdRole() {
 
 		return ResponseEntity.status(HttpStatus.OK).body(rolesService.getRoles());
 
 	}
-	
+
 	@PostMapping("/addUpdProject")
 	public ResponseEntity<Projects> addUpdProject(@RequestBody ProjectsDto projectDto) {
 
 		return ResponseEntity.status(HttpStatus.OK).body(projectService.addUpdProject(projectDto));
 
 	}
-	
+
 	@GetMapping("/getProjects")
 	public ResponseEntity<List<ProjectsDto>> getProjects() {
 

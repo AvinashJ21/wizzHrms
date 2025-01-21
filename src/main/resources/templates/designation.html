@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:fragment="designation-frag" style="padding: 10px; margin-left: 0.5rem">
+
+	<div class="row">
+
+
+		<button type="button" class="btn btn-primary" id="addDesignation"
+			style="margin-left: 0.5rem; margin-bottom: 0.5rem">Add Designation</button>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-lg-12">
+			<div id="designation_grid"></div>
+		</div>
+	</div>
+
+
+	<div class="row d-flex justify-content-center">
+
+
+		<div class="modal" id="designationModal" style="margin-left: 5%"
+			data-backdrop="static" data-keyboard="false">
+
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="card">
+
+						<div class="card-header py-3">
+
+							<h6 id="designationHeader" class="m-0 font-weight-bold"
+								style="line-height: revert; flex: auto; color: white;">Add
+								Designation</h6>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true" style="color: white;">&times;</span>
+							</button>
+
+
+						</div>
+						<div class="card-body">
+							<form class="user" id="designationForm" enctype="multipart/form-data">
+								<div class="form-group row rowMargin">
+									<div class="col-sm-12">
+										<span for="designationName" class="form-label form-control-user">Designation
+											Name</span> <input type="text"
+											class="form-control form-control-user" id="designationName"
+											name="designationName" required>
+									</div>
+								</div>
+								<div class="form-group row rowMargin">
+									<div class="col-sm-12">
+										<span for="designationDesc" class="form-label form-control-user">
+											Designation Description</span> <input type="text"
+											class="form-control form-control-user" id="designationDesc"
+											name="designationDesc">
+									</div>
+								</div>
+								<div id="designationActiveChkBox" class="form-group row"
+									style="display: none;">
+									<div class="col-sm-6 mb-3 mb-sm-0">
+										<span for="designationActive" class="form-label form-control-user"
+											style="padding-bottom: 1.5rem">Active</span> <input
+											type="checkbox" id="designationActive" name="designationActive"
+											value="true" checked="checked">
+									</div>
+								</div>
+
+								<input type="number" class="form-control form-control-user"
+									id="desgid" name="desgid"
+									style="visibility: hidden; width: 0px; height: 0px"> <input
+									type="button"
+									class="btn btn-primary btn-user btn-block rowMargin"
+									style="margin: auto; width: 35%" value="Add Designation"
+									id="addUpdDesignation" />
+								<hr>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+</html>
