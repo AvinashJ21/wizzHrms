@@ -41,5 +41,20 @@ public class RolesServiceImpl implements RolesService {
 			
 			return rolesDtoAll;
 	}
+	
+	@Override
+	public List<RolesDto> getActiveRoles() {
+		
+			List<Roles> rolesAll = rolesRepo.findByActiveTrue();
+			List<RolesDto> rolesDtoAll = new ArrayList<>();
+			rolesAll.stream().forEach(role->{
+				
+				RolesDto roleDto = RolesMapper.MAPPER.mapEntityToDto(role);
+				rolesDtoAll.add(roleDto);
+				
+			});
+			
+			return rolesDtoAll;
+	}
 
 }

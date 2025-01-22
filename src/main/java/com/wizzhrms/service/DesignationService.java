@@ -8,6 +8,7 @@ import com.wizzhrms.entity.Designation;
 public interface DesignationService {
 	
 	 Designation addUpdDesignation(DesignationDto designationDto);
-	 List<DesignationDto> getDesignations();	
+	 List<DesignationDto> getDesignations();
+	 List<DesignationDto> getActiveDesignations();	
 
 }

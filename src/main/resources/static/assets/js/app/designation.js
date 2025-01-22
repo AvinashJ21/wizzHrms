@@ -34,8 +34,8 @@ $(document).ready(function() {
 				enabletooltips: true,
 				enablehover: true,
 				columns: [
-					{ text: 'Role Name', datafield: 'designationName', width: '20%' },
-					{ text: 'Role Description', datafield: 'designationDesc', width: '20%' },
+					{ text: 'Designation Name', datafield: 'designationName', width: '20%' },
+					{ text: 'Designation Description', datafield: 'designationDesc', width: '20%' },
 					{ text: 'Created Date', datafield: 'createdOn', width: '20%' },
 					{ text: 'Modified Date', datafield: 'modifiedDate', width: '20%' },
 					{ text: 'Modified By', datafield: 'modifiedBy' },
@@ -105,7 +105,7 @@ $(document).ready(function() {
 	function getDesignations(){
 		
 		$.ajax({
-			url: "/admin/getDesignations", type: 'POST', dataType: 'json',
+			url: "/admin/getDesignations", type: 'GET', dataType: 'json',
 			contentType: "application/json",
 			data: JSON.stringify(),
 			error: function(xhr, status, error) {

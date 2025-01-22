@@ -134,7 +134,7 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(empService.getAllEmployees());
 
 	}
-	
+
 	@GetMapping("/getEmployee/{employeeId}")
 	public ResponseEntity<List<EmployeeDto>> getEmployees(@PathVariable String employeeId) {
 
@@ -164,17 +164,31 @@ public class AdminController {
 
 	}
 
-	@PostMapping("/getDesignations")
+	@GetMapping("/getDesignations")
 	public ResponseEntity<List<DesignationDto>> getDesignations() {
 
 		return ResponseEntity.status(HttpStatus.OK).body(designationService.getDesignations());
 
 	}
 
+	@GetMapping("/getActiveDesignations")
+	public ResponseEntity<List<DesignationDto>> getActiveDesignations() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(designationService.getActiveDesignations());
+
+	}
+
 	@GetMapping("/getRoles")
-	public ResponseEntity<List<RolesDto>> addUpdRole() {
+	public ResponseEntity<List<RolesDto>> getRoles() {
 
 		return ResponseEntity.status(HttpStatus.OK).body(rolesService.getRoles());
+
+	}
+
+	@GetMapping("/getActiveRoles")
+	public ResponseEntity<List<RolesDto>> getActiveRoles() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(rolesService.getActiveRoles());
 
 	}
 

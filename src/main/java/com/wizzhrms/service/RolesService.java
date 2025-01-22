@@ -10,4 +10,6 @@ public interface RolesService {
 	Roles  addUpdRoles(RolesDto roles);
 
 	List<RolesDto> getRoles();
+
+	List<RolesDto> getActiveRoles();
 }

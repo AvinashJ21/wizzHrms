@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -46,11 +45,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		emp.setEmployeeFullName(empDto.getEmployeeFullName());
 		emp.setDesignation(empDto.getDesignation());
 		emp.setDesignationId(empDto.getDesignationId());
-		emp.setEmployeeOrgId(empDto.getEmployeeOrgId());
+		emp.setEmployeeOrgId(empDto.getEmployeeOrgId().toUpperCase());
 		emp.setEmailId(empDto.getEmailId());
 		emp.setCountryCode(empDto.getCountryCode());
 		emp.setMobNumber(empDto.getMobNumber());
 		emp.setHireDate(empDto.getHireDate());
+		emp.setActive(empDto.isActive());
 		return emp;
 
 	}
@@ -58,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeePersonalDetails getEmpPersonalDetail(EmployeePersonalDetailsDto empPersonalDto) {
 
 		EmployeePersonalDetails empDtls = new EmployeePersonalDetails();
+		empDtls.setEmpPersonalId(empPersonalDto.getEmpPersonalId());
 		empDtls.setPersonalEmailId(empPersonalDto.getPersonalEmailId());
 		empDtls.setBirthDate(empPersonalDto.getBirthDate());
 		empDtls.setAdharNo(empPersonalDto.getAdharNo());
@@ -74,6 +75,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			Roles r = new Roles();
 			r.setId(item.getId());
 			r.setRoleName(item.getRoleName());
+			r.setRoleDesc(item.getRoleDesc());
+			r.setActive(item.isActive());
 			Set<Employee> empSet = new HashSet<>();
 			empSet.add(employee);
 			r.setEmployee(empSet);
@@ -99,10 +102,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeDto> getEmployeesByOrgId(String empId) {
 
-		Employee emp = new Employee();
-		emp.setEmployeeFullName(empId);
-		Example<Employee> example = Example.of(emp);
-		List<Employee> filteredData = empRepo.findAll(example);
+		List<Employee> filteredData = empRepo.findByEmployeeOrgIdContainingIgnoreCase(empId);
 		List<EmployeeDto> allEmpDto = new ArrayList<>();
 		filteredData.stream().forEach(item -> {
 

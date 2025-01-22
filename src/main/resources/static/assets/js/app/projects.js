@@ -14,8 +14,8 @@ $(document).ready(function() {
 
 	function initComponents() {
 
-		$("#projectType").jqxDropDownList({ width: '100%', height: '35', displayMember: "label", valueMember: "label", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select", source: statusArr, selectedIndex: 0 });
-		$("#projectManager").jqxDropDownList({ width: '100%', height: '35', displayMember: "label", valueMember: "key", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select" });
+		$("#projectType").jqxComboBox({ width: '100%', height: '35', displayMember: "label", valueMember: "label", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select", source: statusArr, selectedIndex: 0 });
+		$("#projectManager").jqxComboBox({ width: '100%', height: '35', displayMember: "label", valueMember: "key", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select" });
 	}
 	
 	function initializeProjectsGrid(data) {

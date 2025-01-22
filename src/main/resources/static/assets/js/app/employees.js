@@ -31,11 +31,11 @@ $(document).ready(function() {
 
 		$("#addUpdateEmployeesModal").modal('show');
 		$("#employeesForm").trigger('reset');
-		//		$("#projectsActiveChkBox").css('display', 'none');
+		//$("#projectsActiveChkBox").css('display', 'none');
 
 
 	});
-	
+
 	function initializeEmployeesGrid(data) {
 
 		var source =
@@ -52,7 +52,7 @@ $(document).ready(function() {
 				{ name: 'employeeOrgId', type: 'string' },
 				{ name: 'hireDate', type: 'string' },
 				{ name: 'mobNumber', type: 'string' },
-				{ name: 'empPersonalDetails', type: 'object' },
+				{ name: 'empPersonalDetails', type: 'array' },
 				{ name: 'roles', type: 'array' },
 				{ name: 'createdOn', type: 'date' },
 				{ name: 'modifiedDate', type: 'date' },
@@ -78,14 +78,14 @@ $(document).ready(function() {
 					{ text: 'Employee Id', datafield: 'employeeOrgId', width: '20%' },
 					{ text: 'Designation', datafield: 'designation', width: '20%' },
 					{ text: 'Email Id', datafield: 'emailId', width: '20%' },
+					{ text: 'Country Dial Code', datafield: 'countryCode', width: '20%' },
 					{ text: 'Mobile Number', datafield: 'mobNumber', width: '20%' },
-					{ text: 'Country Code', datafield: 'countryCode', width: '20%' },
 					{ text: 'Hire Date', datafield: 'hireDate', width: '20%' },
 					{ text: 'Created Date', datafield: 'createdOn', width: '20%' },
 					{ text: 'Modified Date', datafield: 'modifiedDate', width: '20%' },
 					{ text: 'Modified By', datafield: 'modifiedBy' },
 					{
-						text: 'Active',pinned:true, datafield: 'active', width: '5%', cellsrenderer: function(row, dataField, value, html, column, data) {
+						text: 'Active', pinned: true, datafield: 'active', width: '5%', cellsrenderer: function(row, dataField, value, html, column, data) {
 
 							if (value)
 								return '<div style="align-items: center;justify-content: center; height: 100%; display: flex;"><img style="width: 35px; height: 20px;" src="../assets//images/active.png"/></div>';
@@ -94,7 +94,7 @@ $(document).ready(function() {
 						}
 
 					}
-					
+
 
 				]
 			});
@@ -158,7 +158,7 @@ $(document).ready(function() {
 
 			console.log(roleItems);
 			for (var i = 0; i < roleItems.length; i++) {
-				var itemObj = { id: roleItems[i].originalItem.id, roleName: roleItems[i].originalItem.roleName };
+				var itemObj = { id: roleItems[i].originalItem.id, roleName: roleItems[i].originalItem.roleName, roleDesc: roleItems[i].originalItem.roleDesc, active: roleItems[i].originalItem.active };
 				roles.push(itemObj);
 			}
 
@@ -168,6 +168,7 @@ $(document).ready(function() {
 			return;
 		}
 		param['roles'] = roles;
+		param['active'] = $('#empActive').is(":checked");
 		saveUpdEmployees(param);
 
 	}
@@ -181,40 +182,23 @@ $(document).ready(function() {
 			data: JSON.stringify(param),
 			error: function(xhr, status, error) {
 				console.log(error);
-				//$('#addUpdateEmployeesModal').modal('hide');
+				$('#addUpdateEmployeesModal').modal('hide');
 			},
 			success: function(data) {
-				//$('#addUpdateEmployeesModal').modal('hide');
-				getEmployees();
+				$('#addUpdateEmployeesModal').modal('hide');
+				findEmpById(param['employeeOrgId']);
 
 			}
 		});
 
 	}
 
-	function getEmployees() {
 
-		$.ajax({
-			url: "/admin/getEmployees", type: 'GET', dataType: 'json',
-			contentType: "application/json",
-			error: function(xhr, status, error) {
-				console.log(error);
-				//$('#projectsModal').modal('hide');
-			},
-			success: function(data) {
-				console.log(data);
-				//	$('#projectsModal').modal('hide');
-				//	initializeProjectsGrid(data);
-
-			}
-		});
-
-	}
 
 	function getDesignations() {
 
 		$.ajax({
-			url: "/admin/getDesignations", type: 'POST', dataType: 'json',
+			url: "/admin/getActiveDesignations", type: 'GET', dataType: 'json',
 			contentType: "application/json",
 			data: JSON.stringify(),
 			error: function(xhr, status, error) {
@@ -250,14 +234,14 @@ $(document).ready(function() {
 	function getEmpRoles() {
 
 		$.ajax({
-			url: "/admin/getRoles", type: 'GET', dataType: 'json',
+			url: "/admin/getActiveRoles", type: 'GET', dataType: 'json',
 			contentType: "application/json",
 			error: function(xhr, status, error) {
 				console.log(error);
 
 			},
 			success: function(data) {
-				$('#rolesModal').modal('hide');
+
 				initializeRolesCombobox(data);
 
 			}
@@ -271,7 +255,12 @@ $(document).ready(function() {
 
 			datafields: [
 				{ name: 'roleName' },
-				{ name: 'id' }
+				{ name: 'roleDesc' },
+				{ name: 'id' },
+				{ name: 'active' },
+				{ name: 'createdOn' },
+				{ name: 'modifiedBy' },
+				{ name: 'modifiedDate' }
 			],
 			localdata: roles,
 			datatype: "array"
@@ -281,22 +270,79 @@ $(document).ready(function() {
 
 
 	}
-	
-	$("#findEmp").click(function(){
-		 
-		  var arr = ['filterEmpId'];
-		  if (validateFields(arr)) {
 
-				 
-				findEmpById();
-			 
+	$("#findEmp").click(function() {
+
+		var arr = ['filterEmpId'];
+		if (validateFields(arr)) {
+
+			var empId = $("#filterEmpId").val();
+			findEmpById(empId);
+
 		} else {
 
-			alert("Please enter all the fields");
+			alert("Please enter filter data");
 		}
 
-		  
-		
+
+
 	});
+
+
+	function findEmpById(empId) {
+
+
+		$.ajax({
+			url: "/admin/getEmployee/" + empId, type: 'GET', dataType: 'json',
+			contentType: "application/json",
+			error: function(xhr, status, error) {
+				console.log(error);
+
+			},
+			success: function(data) {
+
+				initializeEmployeesGrid(data);
+
+			}
+		});
+	}
+
+	$('#employee_grid').on('rowdoubleclick', function(event) {
+
+		var rowIndex = event.args.rowindex;
+		var dataRow = $('#employee_grid').jqxGrid('getrowdata', rowIndex);
+		console.log(dataRow);
+		console.log(dataRow.empPersonalDetails.birthDate);
+		$('#addUpdateEmployeesModal').modal('show');
+		$("#employeeOrgId").val(dataRow.employeeOrgId);
+		$("#employeeFullName").val(dataRow.employeeFullName);
+		$("#emailId").val(dataRow.emailId);
+		$("#mobNumber").val(dataRow.mobNumber);
+		$("#hireDate").val(dataRow.hireDate);
+		$("#personalEmailId").val(dataRow.empPersonalDetails.personalEmailId);
+		$("#dobDate").val(dataRow.empPersonalDetails.birthDate);
+		$("#adharCardNo").val(dataRow.empPersonalDetails.adharNo);
+		$("#panCardNo").val(dataRow.empPersonalDetails.panNo);
+		$("#permanentAddress").val(dataRow.empPersonalDetails.permanentAddress);
+		$("#altMobNumber").val(dataRow.empPersonalDetails.altMobNumber);
+		$("#designation").jqxComboBox('selectItem', dataRow.designationId);
+		$("#countryCode").jqxComboBox('selectItem', dataRow.countryCode);
+		var roles = dataRow.roles;
+		for (var i = 0; i < roles.length; i++) {
+			$("#roles").jqxComboBox('checkItem', roles[i].id);
+
+		}
+		if (dataRow.active) {
+			$("#empActive").prop('checked', true);
+		} else {
+			$("#empActive").prop('checked', false);
+		}
+		$("#empactiveCheckbox").css('display', 'block');
+		$("#employeeId").val(dataRow.employeeId);
+		$("#empPersonalId").val(dataRow.empPersonalDetails.empPersonalId);
+
+	});
+
+
 
 });

@@ -56,7 +56,7 @@ public class Employee implements Serializable {
 	@Column(insertable = true, updatable = true)
 	private Date modifiedDate;
 	private String modifiedBy;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "employee")
 	@JsonIgnore
 	private EmployeePersonalDetails empPersonalDetails;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

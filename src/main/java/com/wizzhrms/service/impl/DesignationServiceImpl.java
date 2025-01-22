@@ -40,4 +40,17 @@ public class DesignationServiceImpl implements DesignationService {
 		return allDesignationsDto;
 	}
 
+	@Override
+	public List<DesignationDto> getActiveDesignations() {
+		List<Designation> allDesignations = designationRepo.findByActiveTrue();
+		List<DesignationDto> allDesignationsDto = new ArrayList<>();
+		allDesignations.stream().forEach(item -> {
+			DesignationDto designDto = DesignationMapper.MAPPER.mapEntityToDto(item);
+			allDesignationsDto.add(designDto);
+		});
+		return allDesignationsDto;
+	}
+	
+	
+
 }
