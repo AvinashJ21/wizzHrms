@@ -47,6 +47,7 @@ $(document).ready(function() {
 				{ name: 'countryCode', type: 'string' },
 				{ name: 'designationId', type: 'int' },
 				{ name: 'designation', type: 'string' },
+				{ name: 'designationShortName', type: 'string' },
 				{ name: 'emailId', type: 'string' },
 				{ name: 'employeeFullName', type: 'string' },
 				{ name: 'employeeOrgId', type: 'string' },
@@ -77,6 +78,7 @@ $(document).ready(function() {
 					{ text: 'Employee Name', datafield: 'employeeFullName', width: '20%' },
 					{ text: 'Employee Id', datafield: 'employeeOrgId', width: '20%' },
 					{ text: 'Designation', datafield: 'designation', width: '20%' },
+					{ text: 'Designation Short Name', datafield: 'designationShortName', width: '20%' },
 					{ text: 'Email Id', datafield: 'emailId', width: '20%' },
 					{ text: 'Country Dial Code', datafield: 'countryCode', width: '20%' },
 					{ text: 'Mobile Number', datafield: 'mobNumber', width: '20%' },
@@ -136,6 +138,7 @@ $(document).ready(function() {
 		console.log(item);
 		var desgItem = $("#designation").jqxComboBox('getSelectedItem');
 		param['designation'] = desgItem.originalItem.designationName;
+		param['designationShortName'] = desgItem.originalItem.designationShortName;
 		param['designationId'] = desgItem.originalItem.id;
 
 		param['countryCode'] = item.originalItem.dial_code;
@@ -220,13 +223,15 @@ $(document).ready(function() {
 
 			datafields: [
 				{ name: 'designationName' },
+				{ name: 'designationShortName' },
+				{ name: 'designationDesc' },
 				{ name: 'id' }
 			],
 			localdata: designations,
 			datatype: "array"
 		};
 		var dataAdapterDesg = new $.jqx.dataAdapter(desgsource);
-		$("#designation").jqxComboBox({ width: '100%', height: '35', selectedIndex: 0, source: dataAdapterDesg, displayMember: "designationName", valueMember: "id", width: 200, height: 30, });
+		$("#designation").jqxComboBox({ width: '100%', height: '35', selectedIndex: 0, source: dataAdapterDesg, displayMember: "designationDesc", valueMember: "id", width: 200, height: 30, });
 
 
 	}
@@ -300,7 +305,7 @@ $(document).ready(function() {
 
 			},
 			success: function(data) {
-
+				console.log(data);
 				initializeEmployeesGrid(data);
 
 			}

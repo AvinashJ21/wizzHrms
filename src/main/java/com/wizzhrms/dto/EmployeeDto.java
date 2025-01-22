@@ -12,6 +12,7 @@ public class EmployeeDto {
 	private String employeeOrgId;
 	private String employeeFullName;
 	private String designation;
+	private String designationShortName;
 	private int designationId;
 	private String emailId;
 	private String countryCode;

@@ -9,6 +9,7 @@ public class DesignationDto {
 
 	private int id;
 	private String designationName;
+	private String designationShortName;
 	private String designationDesc;
 	private Date createdOn;
 	private String modifiedBy;

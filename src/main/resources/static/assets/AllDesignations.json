@@ -1,0 +1,92 @@
+[
+    {
+        "lbl": "BA",
+        "id": 1,
+        "lblDesc": "Business Analyst"
+    },
+    {
+        "lbl": "ARCHT",
+        "id": 2,
+        "lblDesc": "Architect"
+    },
+    {
+        "lbl": "DEV",
+        "id": 3,
+        "lblDesc": "Developer"
+    },
+    {
+        "lbl": "UX",
+        "id": 4,
+        "lblDesc": "UI Designer"
+    },
+    {
+        "lbl": "DEVOPS",
+        "id": 5,
+        "lblDesc": "Devops Engg"
+    },
+    {
+        "lbl": "QA",
+        "id": 6,
+        "lblDesc": "Quality Analyst"
+    },
+    {
+        "lbl": "TL",
+        "id": 7,
+        "lblDesc": "Team Lead"
+    },
+    {
+        "lbl": "MNGR",
+        "id": 8,
+        "lblDesc": "Manager"
+    },
+    {
+        "lbl": "DLMNGR",
+        "id": 9,
+        "lblDesc": "Delivery Manager"
+    },
+    {
+        "lbl": "ITS",
+        "id": 10,
+        "lblDesc": "IT Support"
+    },
+    {
+        "lbl": "PRDS",
+        "id": 11,
+        "lblDesc": "Production Support"
+    },
+    {
+        "lbl": "VP",
+        "id": 12,
+        "lblDesc": "Vice President"
+    },
+    {
+        "lbl": "PRES",
+        "id": 13,
+        "lblDesc": "President"
+    },
+    {
+        "lbl": "DRCTR",
+        "id": 14,
+        "lblDesc": "Director"
+    },
+     {
+        "lbl": "MNGP",
+        "id": 15,
+        "lblDesc": "Managing Partner"
+    },
+    {
+        "lbl": "CTO",
+        "id": 16,
+        "lblDesc": "Cheif Technical Officer"
+    },
+    {
+        "lbl": "COO",
+        "id": 17,
+        "lblDesc": "Cheif Operating Officer"
+    },
+    {
+        "lbl": "CEO",
+        "id": 18,
+        "lblDesc": "Cheif Executive Officer"
+    }
+]

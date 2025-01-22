@@ -44,6 +44,7 @@ public class Employee implements Serializable {
 	private String employeeOrgId;
 	private String employeeFullName;
 	private String designation;
+	private String designationShortName;
 	private int designationId;
 	private String emailId;
 	private String countryCode;
@@ -56,7 +57,7 @@ public class Employee implements Serializable {
 	@Column(insertable = true, updatable = true)
 	private Date modifiedDate;
 	private String modifiedBy;
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "employee")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
 	@JsonIgnore
 	private EmployeePersonalDetails empPersonalDetails;
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

@@ -30,6 +30,7 @@ public class Designation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String designationName;
+	private String designationShortName;
 	private String designationDesc;
 	@CreatedDate
 	@Column(updatable = false)

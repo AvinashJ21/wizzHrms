@@ -50,7 +50,7 @@ public class EmployeePersonalDetails implements Serializable {
 	@LastModifiedDate
 	@Column(insertable = true, updatable = true)
 	private Date createdDate;
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn( name="employeeIdFk", referencedColumnName  = "employeeId")
 	@JsonIgnore
 	private Employee employee;

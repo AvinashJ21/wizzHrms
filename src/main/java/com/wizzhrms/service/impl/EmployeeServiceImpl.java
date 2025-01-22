@@ -44,6 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		emp.setEmployeeId(empDto.getEmployeeId());
 		emp.setEmployeeFullName(empDto.getEmployeeFullName());
 		emp.setDesignation(empDto.getDesignation());
+		emp.setDesignationShortName(empDto.getDesignationShortName());
 		emp.setDesignationId(empDto.getDesignationId());
 		emp.setEmployeeOrgId(empDto.getEmployeeOrgId().toUpperCase());
 		emp.setEmailId(empDto.getEmailId());
