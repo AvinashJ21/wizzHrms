@@ -12,4 +12,6 @@ public interface EmployeeService {
 	List<EmployeeDto> getAllEmployees();
 	
 	List<EmployeeDto> getEmployeesByOrgId(String empId);
+	
+	List<EmployeeDto> getEmployeesByShortNames(List<String> shortNames);
 }

@@ -10,5 +10,7 @@ public interface ProjectService {
 	Projects addUpdProject(ProjectsDto projectsDto);
 
 	List<ProjectsDto> getProjects();
-	
+
+	List<ProjectsDto> getActiveProjects();
+
 }

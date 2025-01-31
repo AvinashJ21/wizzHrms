@@ -57,6 +57,7 @@
 				<ul style="margin-left: 30px;" id="roleAndOtherList">
 					<li>Roles</li>
 					<li>Designations</li>
+					<li>Tasks</li>
 					<li>Projects</li>
 				</ul>
 				<div id="rolesTab">
@@ -64,6 +65,9 @@
 				</div>
 				<div id="designationTab">
 					<div th:insert="~{/designation::designation-frag}"></div>
+				</div>
+				<div id="tasksTab">
+					<div th:insert="~{/tasks::tasks-frag}"></div>
 				</div>
 				<div id="projectsTab">
 					<div th:insert="~{/projects::projects-frag}"></div>
@@ -126,6 +130,7 @@
 	<script type="text/javascript" src="../assets/js/app/roles.js"></script>
 	<script type="text/javascript" src="../assets/js/app/projects.js"></script>
 	<script type="text/javascript" src="../assets/js/app/designation.js"></script>
+	<script type="text/javascript" src="../assets/js/app/tasks.js"></script>
 	<script type="text/javascript" src="../assets/js/app/common.js"></script>
 
 

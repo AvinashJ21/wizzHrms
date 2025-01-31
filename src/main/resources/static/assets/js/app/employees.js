@@ -8,6 +8,7 @@ $(document).ready(function() {
 	//getEmployees();
 	getDesignations();
 	getEmpRoles();
+	getEmpAssignedProjects();
 	initializeEmployeesGrid(null);
 	var url = "../assets/CountryCodes.json";
 	var source =
@@ -31,7 +32,10 @@ $(document).ready(function() {
 
 		$("#addUpdateEmployeesModal").modal('show');
 		$("#employeesForm").trigger('reset');
-		//$("#projectsActiveChkBox").css('display', 'none');
+		$("#empactiveCheckbox").css('display', 'none');
+		$("#addUpdEmployee").val('Add Employee');
+		$("#empheader").html('Add Employee');
+		$("#roles").jqxComboBox('uncheckAll');
 
 
 	});
@@ -55,6 +59,7 @@ $(document).ready(function() {
 				{ name: 'mobNumber', type: 'string' },
 				{ name: 'empPersonalDetails', type: 'array' },
 				{ name: 'roles', type: 'array' },
+				{ name: 'projects', type: 'array' },
 				{ name: 'createdOn', type: 'date' },
 				{ name: 'modifiedDate', type: 'date' },
 				{ name: 'modifiedBy', type: 'string' },
@@ -171,6 +176,24 @@ $(document).ready(function() {
 			return;
 		}
 		param['roles'] = roles;
+
+		var projects = [];
+		var projectItems = $("#projects").jqxComboBox('getCheckedItems');
+		if (projectItems.length > 0) {
+
+			console.log(projectItems);
+			for (var i = 0; i < projectItems.length; i++) {
+				var itemObj = {
+					id: projectItems[i].originalItem.id, projectName: projectItems[i].originalItem.projectName, projectCode: projectItems[i].originalItem.projectCode,
+					active: projectItems[i].originalItem.active, projectType: projectItems[i].originalItem.projectType, projectOwner: projectItems[i].originalItem.projectOwner,
+					startDate: projectItems[i].originalItem.startDate, endDate: projectItems[i].originalItem.endDate, tasks: projectItems[i].originalItem.tasks
+				};
+				projects.push(itemObj);
+			}
+
+
+		}
+		param['projects'] = projects;
 		param['active'] = $('#empActive').is(":checked");
 		saveUpdEmployees(param);
 
@@ -276,6 +299,52 @@ $(document).ready(function() {
 
 	}
 
+	function getEmpAssignedProjects() {
+
+		$.ajax({
+			url: "/admin/getActiveProjects", type: 'GET', dataType: 'json',
+			contentType: "application/json",
+			error: function(xhr, status, error) {
+				console.log(error);
+
+			},
+			success: function(data) {
+
+				initializeProjectsCombobox(data);
+
+			}
+		});
+	}
+
+	function initializeProjectsCombobox(projects) {
+
+		var projsource =
+		{
+
+			datafields: [
+				{ name: 'id' },
+				{ name: 'projectName' },
+				{ name: 'projectCode' },
+				{ name: 'projectType' },
+				{ name: 'projectOwner' },
+				{ name: 'startDate' },
+				{ name: 'endDate' },
+				{ name: 'tasks',type:'array'},
+				{ name: 'managerName' },
+				{ name: 'createdOn' },
+				{ name: 'modifiedDate' },
+				{ name: 'modifiedBy' },
+				{ name: 'active' }
+			],
+			localdata: projects,
+			datatype: "array"
+		};
+		var dataAdapterProject = new $.jqx.dataAdapter(projsource);
+		$("#projects").jqxComboBox({ checkboxes: true, width: '100%', height: '35', selectedIndex: 0, source: dataAdapterProject, displayMember: "projectName", valueMember: "id", width: 200, height: 30, });
+
+
+	}
+
 	$("#findEmp").click(function() {
 
 		var arr = ['filterEmpId'];
@@ -337,6 +406,10 @@ $(document).ready(function() {
 			$("#roles").jqxComboBox('checkItem', roles[i].id);
 
 		}
+		var projects = dataRow.projects;
+		for (var i = 0; i < projects.length; i++) {
+			$("#projects").jqxComboBox('checkItem', projects[i].id);
+		}
 		if (dataRow.active) {
 			$("#empActive").prop('checked', true);
 		} else {
@@ -345,6 +418,8 @@ $(document).ready(function() {
 		$("#empactiveCheckbox").css('display', 'block');
 		$("#employeeId").val(dataRow.employeeId);
 		$("#empPersonalId").val(dataRow.empPersonalDetails.empPersonalId);
+		$("#addUpdEmployee").val('Update Employee');
+		$("#empheader").html('Update Employee');
 
 	});
 

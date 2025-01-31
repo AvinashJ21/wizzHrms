@@ -39,5 +39,23 @@ public class ProjectsServiceImpl implements ProjectService {
 
 		return projectsData;
 	}
+	
+	
+	@Override
+	public List<ProjectsDto> getActiveProjects() {
+
+		List<Projects> lstData = projectRepo.findByActiveTrue();
+		List<ProjectsDto> projectsData = new ArrayList<>();
+		lstData.stream().forEach(item -> {
+			ProjectsDto projectDto = ProjectsMapper.MAPPER.mapEntityToDto(item);
+			projectsData.add(projectDto);
+		});
+
+		return projectsData;
+	}
+
+
+	
+	
 
 }

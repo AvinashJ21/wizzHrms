@@ -21,23 +21,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "Roles")
+@Table(name = "Tasks")
 @EntityListeners(AuditingEntityListener.class)
-@Data
-public class Roles implements Serializable {
-
-	/**
+@Getter
+@Setter
+public class Tasks implements Serializable{/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4522382624557637046L;
+	private static final long serialVersionUID = -5954167247609508516L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String roleName;
-	private String roleDesc;
+	private String taskName;
+	private String taskDesc;
 	@CreatedDate
 	@Column(updatable = false)
 	private Date createdOn;
@@ -46,9 +47,9 @@ public class Roles implements Serializable {
 	@Column(insertable = true, updatable = true)
 	private Date modifiedDate;
 	private boolean active;
-	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+	@ManyToMany(mappedBy = "tasks", fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
 	@JsonIgnore
-    private Set<Employee> employee = new HashSet<>();
+    private Set<Projects> projects = new HashSet<>();
 	
-	
+
 }

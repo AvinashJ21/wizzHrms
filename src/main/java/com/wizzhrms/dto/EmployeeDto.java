@@ -23,5 +23,6 @@ public class EmployeeDto {
 	private String modifiedBy;
     private EmployeePersonalDetailsDto empPersonalDetails;
     private Set<RolesDto> roles;
+    private Set<ProjectsDto> projects;
     private boolean active;
 }

@@ -57,15 +57,22 @@ public class Employee implements Serializable {
 	@Column(insertable = true, updatable = true)
 	private Date modifiedDate;
 	private String modifiedBy;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee") /* mappedBy is added on the non owning table that is it doesnt contain foreign key*/
 	@JsonIgnore
 	private EmployeePersonalDetails empPersonalDetails;
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinTable(name = "employee_roles", joinColumns = {
 			@JoinColumn(name = "employeeId", referencedColumnName = "employeeId") }, inverseJoinColumns = {
 					@JoinColumn(name = "rolesId", referencedColumnName = "id") })
 	@JsonIgnore
 	private Set<Roles> roles = new HashSet<>();
 	private boolean active;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@JoinTable(name = "employee_project", joinColumns = {
+			@JoinColumn(name = "employeeId", referencedColumnName = "employeeId") }, inverseJoinColumns = {
+					@JoinColumn(name = "projectId", referencedColumnName = "id") })
+	@JsonIgnore
+	private Set<Projects> projects = new HashSet<>();
+	
 
 }

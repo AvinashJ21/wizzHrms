@@ -24,18 +24,21 @@ import com.wizzhrms.dto.OrganizationalDetailsDto;
 import com.wizzhrms.dto.OrganizationalEventsDto;
 import com.wizzhrms.dto.ProjectsDto;
 import com.wizzhrms.dto.RolesDto;
+import com.wizzhrms.dto.TasksDto;
 import com.wizzhrms.entity.Designation;
 import com.wizzhrms.entity.Employee;
 import com.wizzhrms.entity.OrganizationDetails;
 import com.wizzhrms.entity.OrganizationalEvents;
 import com.wizzhrms.entity.Projects;
 import com.wizzhrms.entity.Roles;
+import com.wizzhrms.entity.Tasks;
 import com.wizzhrms.service.DesignationService;
 import com.wizzhrms.service.EmployeeService;
 import com.wizzhrms.service.OrganizationDetailsService;
 import com.wizzhrms.service.OrganizationEventService;
 import com.wizzhrms.service.ProjectService;
 import com.wizzhrms.service.RolesService;
+import com.wizzhrms.service.TasksService;
 import com.wizzhrms.service.constants.Constants;
 
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +65,9 @@ public class AdminController {
 
 	@Autowired
 	DesignationService designationService;
+
+	@Autowired
+	TasksService taskService;
 
 	@GetMapping("/organizationdetails")
 	public ModelAndView getOrganizationDetails() {
@@ -132,6 +138,13 @@ public class AdminController {
 	public ResponseEntity<List<EmployeeDto>> getEmployees() {
 
 		return ResponseEntity.status(HttpStatus.OK).body(empService.getAllEmployees());
+
+	}
+
+	@PostMapping("/getEmployeesByShortName")
+	public ResponseEntity<List<EmployeeDto>> getEmployeesByShortName(@RequestBody List<String> shortNames) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(empService.getEmployeesByShortNames(shortNames));
 
 	}
 
@@ -206,4 +219,31 @@ public class AdminController {
 
 	}
 
+	@GetMapping("/getActiveProjects")
+	public ResponseEntity<List<ProjectsDto>> getActiveProjects() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.getActiveProjects());
+
+	}
+
+	@GetMapping("/getTasks")
+	public ResponseEntity<List<TasksDto>> getTasks() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.getTasks());
+
+	}
+
+	@GetMapping("/getActiveTasks")
+	public ResponseEntity<List<TasksDto>> getActiveTasks() {
+
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.getActiveTasks());
+
+	}
+
+	@PostMapping("/saveUpdTasks")
+	public ResponseEntity<Tasks> saveUpdTasks(@RequestBody TasksDto taskDto) {
+
+		return ResponseEntity.status(HttpStatus.OK).body(taskService.saveUpdTask(taskDto));
+
+	}
 }

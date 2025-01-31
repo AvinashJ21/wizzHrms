@@ -9,13 +9,15 @@ $(document).ready(function() {
 	function init() {
 		initComponents();
 		getProjects();
+		getActiveTasks();
+		//getEmployeesByShortName(["TL","MNGR"]);
 
 	}
 
 	function initComponents() {
 
 		$("#projectType").jqxComboBox({ width: '100%', height: '35', displayMember: "label", valueMember: "label", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select", source: statusArr, selectedIndex: 0 });
-		$("#projectManager").jqxComboBox({ width: '100%', height: '35', displayMember: "label", valueMember: "key", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select" });
+		//$("#projectManager").jqxComboBox({ width: '100%', height: '35', displayMember: "label", valueMember: "key", dropDownHeight: 100, autoDropDownHeight: "auto", placeHolder: "Select" });
 	}
 	
 	function initializeProjectsGrid(data) {
@@ -31,6 +33,8 @@ $(document).ready(function() {
 				{ name: 'projectOwner', type: 'string' },
 				{ name: 'startDate', type: 'string' },
 				{ name: 'endDate', type: 'string' },
+				{ name: 'tasks', type: 'array' },
+				{ name: 'managerName', type: 'string' },
 				{ name: 'createdOn', type: 'date' },
 				{ name: 'modifiedDate', type: 'date' },
 				{ name: 'modifiedBy', type: 'string' },
@@ -92,6 +96,7 @@ $(document).ready(function() {
 		$("#projectsModal").modal('show');
 		$("#projectsForm").trigger('reset');
 		$("#projectsActiveChkBox").css('display', 'none');
+		$("#tasks").jqxComboBox('uncheckAll'); 
 
 
 	});
@@ -107,6 +112,29 @@ $(document).ready(function() {
 		param['endDate'] = $("#endDate").val();
 		param['id'] = $("#id").val();
 		param['active'] = $('#projectActive').is(":checked");
+//		var manager = $("#projectManager").jqxComboBox('getSelectedItem');
+//		console.log(manager);
+//		param['managerId'] = manager.originalItem.employeeId;
+//		param['managerOrgId'] = manager.originalItem.employeeOrgId;
+//		param['managerName'] = manager.originalItem.employeeFullName;
+		var tasks = [];
+		var taskItems = $("#tasks").jqxComboBox('getCheckedItems');
+		if (taskItems.length > 0) {
+
+			console.log(taskItems);
+			for (var i = 0; i < taskItems.length; i++) {
+				var itemObj = { id: taskItems[i].originalItem.id, taskName: taskItems[i].originalItem.taskName, taskDesc: taskItems[i].originalItem.taskDesc, active: taskItems[i].originalItem.active };
+				tasks.push(itemObj);
+			}
+
+
+		} else {
+			alert("Please select tasks");
+			return;
+		}
+		param['tasks'] = tasks;
+		
+//		console.log(param);
 		var arr = ['projectName', 'projectCode', 'projectType', 'projectOwner', 'startDate', 'endDate'];
 		if (validateFields(arr)) {
 
@@ -170,6 +198,13 @@ $(document).ready(function() {
 		$("#startDate").val(dataRow.startDate);
 		$("#endDate").val(dataRow.endDate);
 		$("#projectType").jqxComboBox('selectItem', dataRow.projectType ); 
+		//$("#projectManager").jqxComboBox('selectItem', dataRow.managerId);
+		var tasks = dataRow.tasks;
+		for (var i = 0; i < tasks.length; i++) {
+			$("#tasks").jqxComboBox('checkItem', tasks[i].id);
+
+		}
+		
 		$("#addUpdproject").val('Update Project');
 		$("#projectHeader").html('Update Project');
 		if (dataRow.active) {
@@ -179,5 +214,84 @@ $(document).ready(function() {
 		}
 		$("#projectsActiveChkBox").css('display', 'block');
 	});
+	
+	function getActiveTasks(){
+		
+		$.ajax({
+			url: "/admin/getActiveTasks", type: 'GET', dataType: 'json',
+			contentType: "application/json",
+			error: function(xhr, status, error) {
+				console.log(error);
+				 
+			},
+			success: function(data) {
+				initializeTasksCombo(data);
+
+			}
+		});
+		
+	}
+	
+	function initializeTasksCombo(data) {
+
+		var desgsource =
+		{
+
+			datafields: [
+				{ name: 'taskName' },
+				{ name: 'taskDesc' },
+				{ name: 'id' },
+				{ name: 'active' },
+				{ name: 'createdOn' },
+				{ name: 'modifiedBy' },
+				{ name: 'modifiedDate' }
+			],
+			localdata: data,
+			datatype: "array"
+		};
+		var dataAdapterTasks = new $.jqx.dataAdapter(desgsource);
+		$("#tasks").jqxComboBox({ checkboxes: true, width: '100%', height: '35', selectedIndex: 0, source: dataAdapterTasks, displayMember: "taskName", valueMember: "id", width: 200, height: 30, });
+
+
+	}
+	
+	/*function getEmployeesByShortName(param){
+		
+		$.ajax({
+			url: "/admin/getEmployeesByShortName", type: 'POST', dataType: 'json',
+			contentType: "application/json",
+			data: JSON.stringify(param),
+			error: function(xhr, status, error) {
+				console.log(error);
+				 
+			},
+			success: function(data) {
+				console.log("EMPLOYEEEES");
+				console.log(data);
+				initializeManagerCombo(data);
+
+			}
+		});
+		
+	}
+	
+	function initializeManagerCombo(data) {
+
+		var desgsource =
+		{
+
+			datafields: [
+				{ name: 'employeeFullName' },
+				{ name: 'employeeOrgId' },
+				{ name: 'employeeId' }
+			],
+			localdata: data,
+			datatype: "array"
+		};
+		var dataAdapterTasks = new $.jqx.dataAdapter(desgsource);
+		$("#projectManager").jqxComboBox({ width: '100%', height: '35', selectedIndex: 0, source: dataAdapterTasks, displayMember: "employeeFullName", valueMember: "employeeId", width: 200, height: 30, });
+
+
+	}*/
 
 });
